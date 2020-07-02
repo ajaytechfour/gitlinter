@@ -1,0 +1,14 @@
+{
+    "app": {
+        "port": 3000,
+        "Mysql": true
+    },
+    "lintWebhook": "http://localhost:3000/api/v1/resources/github/webhook",
+    "db": {
+        "HOST": "127.0.0.1",
+        "port": 3306,
+        "USER": "lalit",
+        "PASSWORD": "admin@lalit",
+        "DB": "gitlinter"
+    }
+}
