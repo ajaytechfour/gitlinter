@@ -8,11 +8,18 @@ const config = require('../config/default.json');
 
 if ( config.app.Mysql === true ){
     // Create a connection to the database
-    const connection = mysql.createConnection({
-      host: dbConfig.HOST,
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      database: dbConfig.DB
+//    const connection = mysql.createConnection({
+//      host: dbConfig.HOST,
+//      user: dbConfig.USER,
+//      password: dbConfig.PASSWORD,
+//      database: dbConfig.DB
+//    });
+
+   const connection = mysql.createConnection({
+      host: config.db.HOST,
+      user: config.db.USER,
+      password: config.db.PASSWORD,
+      database: config.db.DB
     });
 
     // open the MySQL connection
