@@ -11,7 +11,7 @@ const CommitLog = function(commitLog) {
 };
 
 CommitLog.create = (newCommitLog, result) => {
-  sql.query("INSERT INTO customers SET ?", newCommitLog, (err, res) => {
+  sql.query("INSERT INTO gitlinter SET ?", newCommitLog, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -78,4 +78,4 @@ CommitLog.updateById = (id, customer, result) => {
   );
 };
 
-module.exports = Customer;
+module.exports = CommitLog;

@@ -1,0 +1,5 @@
+const CommitLinter = function(commitInfo) {
+
+
+
+}

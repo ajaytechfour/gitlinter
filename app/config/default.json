@@ -2,8 +2,10 @@
     "app": {
         "port": 3000,
         "Mysql": true,
-        "linthook": true
+        "linthook": true,
+        "issuehook": true
     },
+    "lintWebhook": "http://localhost:3000/api/v1/resources/github/webhook",
     "lintWebhook": "http://localhost:3000/api/v1/resources/github/webhook",
     "db": {
         "HOST": "127.0.0.1",
