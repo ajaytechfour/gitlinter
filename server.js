@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ message: "Welcome GitLinter application." });
 });
-//require("./app/routes/customer.routes.js")(app);
 require("./app/routes/webhook.routes.js")(app);
 // set port, listen for requests
 app.listen(3000, () => {

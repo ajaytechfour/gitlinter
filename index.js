@@ -17,10 +17,17 @@ const nlp = winkNLP(model);
 //console.log( doc.tokens().out(its.type) );
 // -> [ 'Hello', 'World', '!' ]
 
-const text = 'Masking on Mobile & Email for Agent on popup';
+//const text = 'Masking on Mobile & Email for Agent on popup';
+const text = 'fix issue emp profile image url'
+
+
 
 const doc = nlp.readDoc(text);
 
+
+//console.log( doc.tokens().out(its.type) );
+//console.log(doc.tokens().out(its.pos));
+
 console.log(doc.tokens().out(its.pos));
 
-console.log(doc.entities().out());
+//console.log(doc.entities().out());

@@ -1,5 +1,6 @@
 // Control Git lint
 const config = require('../config/default.json');
+const linter = require('../models/commitlinter.js');
 exports.GitReciveCommit = (req, res) => {
 
 // Validate request
@@ -9,6 +10,7 @@ exports.GitReciveCommit = (req, res) => {
     });
   }
 
+  lintMessage  = linter(req.body.commits[0].message)
 
   const gitHookInbondData = {
           repositoryname : req.body.repository.name,
@@ -19,16 +21,18 @@ exports.GitReciveCommit = (req, res) => {
           committerusername : req.body.commits[0].committer.username
   }
 
+  // Check for the mysql log
   if ( config.app.Mysql === true ) {
         const CommitLog = require("../models/webhook.model.js");
 
     CommitLog.create(gitHookInbondData, (err, data) => {
-            console.log('data created')
+
       });
 
   }
 
-  if ( config.app.linthook === true ) {
+  // Check for the Outbondhook
+  if ( config.app.outbondhook === true ) {
     const OutBondHook = require("../models/outbondhook.js");
     OutBondHook(gitHookInbondData)
 

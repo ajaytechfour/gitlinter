@@ -2,16 +2,18 @@
     "app": {
         "port": 3000,
         "Mysql": true,
-        "linthook": true,
-        "issuehook": true
+        "outbondhook": false,
+        "issuehook": false
     },
-    "lintWebhook": "http://localhost:3000/api/v1/resources/github/webhook",
-    "lintWebhook": "http://localhost:3000/api/v1/resources/github/webhook",
+    "outbondhookUrl": "http://0.0.0.0:4001/api/v1/resources/github/webhook",
+    "issuehookUrl": "http://0.0.0.0:4001/api/v1/resources/github/webhook",
     "db": {
         "HOST": "127.0.0.1",
         "port": 3306,
         "USER": "lalit",
         "PASSWORD": "admin@lalit",
         "DB": "gitlinter"
-    }
+    },
+    "checkFirstWord": ["feat", "fix", "docs", "style", "refactor", "perf", "test", "chore", "revert"],
+    "commitMaxlength": 100
 }
