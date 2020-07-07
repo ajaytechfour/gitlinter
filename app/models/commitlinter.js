@@ -9,7 +9,7 @@ const config = require('../config/default.json');
 
 const CommitLinter = function(commitMessage) {
 
-if ( commitMessage.length > config.commitMaxlength )
+if ( commitMessage.length > config.linter.commitMaxlength )
     return 'Message Should be less than 100 char';
 
 

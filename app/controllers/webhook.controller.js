@@ -32,7 +32,7 @@ exports.GitReciveCommit = (req, res) => {
   }
 
   // Check for the Outbondhook
-  if ( config.app.outbondhook === true ) {
+  if ( config.linter.outbondhook === true ) {
     const OutBondHook = require("../models/outbondhook.js");
     OutBondHook(gitHookInbondData)
 
