@@ -10,22 +10,26 @@ exports.GitReciveCommit = (req, res) => {
     });
   }
 
-  lintMessage  = linter(req.body.commits[0].message)
+  LinterResponse  = linter(req.body.commits[0].message);
 
   const gitHookInbondData = {
+
           repositoryname : req.body.repository.name,
           commitmessage : req.body.commits[0].message,
           commitdatetime : req.body.commits[0].timestamp,
           committername : req.body.commits[0].committer.name,
           committeremail : req.body.commits[0].committer.email,
-          committerusername : req.body.commits[0].committer.username
+          committerusername : req.body.commits[0].committer.username,
+          linterResponse : JSON.stringify(LinterResponse)
+
   }
 
   // Check for the mysql log
   if ( config.app.Mysql === true ) {
-        const CommitLog = require("../models/webhook.model.js");
 
-    CommitLog.create(gitHookInbondData, (err, data) => {
+     const CommitLog = require("../models/mysql.model.js");
+
+     CommitLog.create(gitHookInbondData, (err, data) => {
 
       });
 
@@ -39,6 +43,7 @@ exports.GitReciveCommit = (req, res) => {
 
   }
 
+    gitHookInbondData.linterResponse = LinterResponse
 
     res.send(gitHookInbondData);
 

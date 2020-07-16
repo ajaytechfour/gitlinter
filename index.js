@@ -18,16 +18,49 @@ const nlp = winkNLP(model);
 // -> [ 'Hello', 'World', '!' ]
 
 //const text = 'Masking on Mobile & Email for Agent on popup';
-const text = 'fix issue emp profile image url'
+//const text = 'fix issue emp profile image url close #123'
 
 
 
-const doc = nlp.readDoc(text);
-
+//const doc = nlp.readDoc(text);
 
 //console.log( doc.tokens().out(its.type) );
 //console.log(doc.tokens().out(its.pos));
 
-console.log(doc.tokens().out(its.pos));
+//console.log(doc.tokens().out(its.pos));
 
 //console.log(doc.entities().out());
+
+
+const text = 'fix: issue for the image close ';
+const patterns = [
+  { name: 'issueNumber', patterns: [ '[#] [CARDINAL]' ] }
+];
+nlp.learnCustomEntities(patterns);
+const doc = nlp.readDoc(text);
+
+
+//if ( doc.customEntities().out(its.detail).length > 0 ) {
+//    if ( doc.customEntities().out(its.detail)[0].type == 'issueNumber' ) {
+//    issuenumber = doc.customEntities().out(its.detail)[0].value
+//    issuenumber = issuenumber.replace('#','');
+//    console.log(issuenumber)
+//
+//    }
+
+
+
+
+//}
+
+doc.customEntities()
+   .each( ( customEntities, index ) => { // each entity and its index
+              console.log(customEntities.out(its.detail).type );
+              //console.log( `${index}:`, customEntities.out() );
+        } );
+
+
+
+
+
+

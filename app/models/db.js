@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-//const dbConfig = require("../config/db.config.js");
 const config = require('../config/default.json');
 
 if ( config.app.Mysql === true ){
@@ -7,8 +6,8 @@ if ( config.app.Mysql === true ){
    const connection = mysql.createConnection({
       host: config.app.MysqlConnectDetails.HOST,
       user: config.app.MysqlConnectDetails.USER,
-      password: config.MysqlConnectDetails.db.PASSWORD,
-      database: config.MysqlConnectDetails.db.DB
+      password: config.app.MysqlConnectDetails.PASSWORD,
+      database: config.app.MysqlConnectDetails.DB
     });
 
     // open the MySQL connection

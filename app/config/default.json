@@ -1,7 +1,7 @@
 {
     "app": {
         "port": 3000,
-        "Mysql": true,
+        "Mysql": false,
         "MysqlConnectDetails" : {
                                 "HOST": "127.0.0.1",
                                 "port": 3306,
@@ -15,7 +15,7 @@
     "linter": {
         "checkFirstWord": ["feat", "fix", "docs", "style", "refactor", "perf", "test", "chore", "revert"],
         "commitMaxlength": 100,
-        "outbondhook": true,
+        "outbondhook": false,
         "issuehook": false,
         "outbondhookUrl": "http://0.0.0.0:4001/api/v1/resources/github/webhook",
         "issuehookUrl": "http://0.0.0.0:4001/api/v1/resources/github/webhook"
