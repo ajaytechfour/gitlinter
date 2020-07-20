@@ -32,9 +32,9 @@ const nlp = winkNLP(model);
 //console.log(doc.entities().out());
 
 
-const text = 'fix: issue for the image close ';
+const text = 'fix: issue for the image close #123';
 const patterns = [
-  { name: 'issueNumber', patterns: [ '[#] [CARDINAL]' ] }
+  { name: 'issueNumber', patterns: [ 'close | [#] [CARDINAL]' ] }
 ];
 nlp.learnCustomEntities(patterns);
 const doc = nlp.readDoc(text);
@@ -53,10 +53,13 @@ const doc = nlp.readDoc(text);
 
 //}
 
+console.log( doc.entities().out( its.type ) );
+   console.log('aaaaaaaaa');
+
 doc.customEntities()
    .each( ( customEntities, index ) => { // each entity and its index
               console.log(customEntities.out(its.detail).type );
-              //console.log( `${index}:`, customEntities.out() );
+              console.log( `${index}:`, customEntities.out() );
         } );
 
 
