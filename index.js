@@ -32,12 +32,12 @@ const nlp = winkNLP(model);
 //console.log(doc.entities().out());
 
 
-const text = 'fix: issue for the image close #123';
-const patterns = [
-  { name: 'issueNumber', patterns: [ 'close | [#] [CARDINAL]' ] }
-];
-nlp.learnCustomEntities(patterns);
-const doc = nlp.readDoc(text);
+//const text = 'fix: issue for the image close #123';
+//const patterns = [
+//  { name: 'issueNumber', patterns: [ 'close | [#] [CARDINAL]' ], mark: [1,2]}
+//];
+//nlp.learnCustomEntities(patterns);
+//const doc = nlp.readDoc(text);
 
 
 //if ( doc.customEntities().out(its.detail).length > 0 ) {
@@ -53,14 +53,41 @@ const doc = nlp.readDoc(text);
 
 //}
 
-console.log( doc.entities().out( its.type ) );
-   console.log('aaaaaaaaa');
+//console.log(doc.customEntities().out().join( '\n' ));
+//console.log(doc.customEntities().itemAt(0).tokens().itemAt(0).index()-2)
+//console.log(doc.customEntities().itemAt(0).tokens().itemAt(0).index())
 
-doc.customEntities()
-   .each( ( customEntities, index ) => { // each entity and its index
-              console.log(customEntities.out(its.detail).type );
-              console.log( `${index}:`, customEntities.out() );
-        } );
+//console.log(doc.customEntities().out());
+
+//console.log( doc.entities().out( its.type ) );
+//console.log('aaaaaaaaa');
+
+//doc.customEntities()
+//   .each( ( customEntities, index ) => { // each entity and its index
+ //             console.log(customEntities.out(its.detail).type );
+  //            console.log( `${index}:`, customEntities.out() );
+   //     } );
+
+
+text = 'This ok commit closes test: #53';
+
+const patterns = [
+  { name: 'issue1', patterns: [ '[fix|fixes|clse|closes|reference|references] [#] [CARDINAL]' ], mark: [1,2]},
+  { name: 'issue2', patterns: [ '[fix|fixes|clse|closes|reference|references] [:] [#] [CARDINAL]' ], mark: [2,3]}
+];
+
+nlp.learnCustomEntities(patterns);
+doc = nlp.readDoc(text);
+
+console.log(`\ntokens = ${doc.tokens().length()}`);
+
+console.log(`\ncustom entities = ${doc.customEntities().length()}`);
+
+console.log(doc.customEntities().out().join( '\n' ));
+
+console.log(doc.customEntities().itemAt(0).tokens().itemAt(0).index()-2)
+
+//console.log(doc.customEntities().itemAt(0))
 
 
 
