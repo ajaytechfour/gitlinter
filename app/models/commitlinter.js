@@ -10,7 +10,7 @@ const config = require('../config/default.json');
 const CommitLinter = function( commitMessage ) {
 
     var LinterResponse = {
-        'issueList' : RetriveIssueNumber( commitMessage ),
+        'issueSummary' : RetriveIssueNumber( commitMessage ),
         'linterMessage' : LintMessage( commitMessage )
     }
 
@@ -47,24 +47,43 @@ function LintMessage(commitMessage) {
 
 function RetriveIssueNumber( commitMessage ) {
     var issueList = [];
+    var keywords = [];
+    var details = [];
 
     const patterns = [
-         { name: 'issueNumber', patterns: [ '[#] [CARDINAL]' ] }
-     ];
+        { name: 'KeywordIssueNumber', patterns: [ '[fix|fixes|close|closes|reference|references] [#] [CARDINAL]' ], mark: [2,2]},
+        { name: 'KeywordIssueNumber2', patterns: [ '[fix|fixes|close|closes|reference|references] [:] [#] [CARDINAL]' ], mark: [3,3]},
+        { name: 'IssueNumber', patterns: [ '[#] [CARDINAL]' ], mark: [1,1]},
+        { name: 'Keyword', patterns: [ '[fix|fixes|close|closes|reference|references]' ]},
+    ];
     nlp.learnCustomEntities(patterns);
     const doc = nlp.readDoc( commitMessage );
 
 
     doc.customEntities()
    .each( ( customEntities, index ) => { // each entity and its index
-              if ( customEntities.out(its.detail).type === 'issueNumber' ) {
-                    issueList.push(customEntities.out(its.detail).value.replace('#',''));
+              if ( ['KeywordIssueNumber', 'KeywordIssueNumber2'].includes(customEntities.out(its.detail).type) ) {
+                    issueList.push(customEntities.out(its.detail).value);
+                    var token = doc.tokens().itemAt( doc.customEntities().itemAt(index).tokens().itemAt(0).index()-2 );
+                    var DetailsArr = { 'IssueNumber' : customEntities.out(its.detail).value , 'Keyword' : token.out() }
+
+                    details.push( DetailsArr );
+                    keywords.push( token.out() );
+
               }
+              else if ( ['IssueNumber'].includes(customEntities.out(its.detail).type) ) {
+                    issueList.push(customEntities.out(its.detail).value);
+              }
+
+              else if ( ['Keyword'].includes(customEntities.out(its.detail).type) ) {
+                    keywords.push( customEntities.out(its.detail).value );
+              }
+
 
         } );
 
 
-    return issueList;
+    return { 'issueList': issueList, 'keywords': keywords, 'details': details };
 
 }
 

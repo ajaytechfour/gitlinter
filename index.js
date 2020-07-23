@@ -69,28 +69,89 @@ const nlp = winkNLP(model);
    //     } );
 
 
-text = 'This ok commit closes test: #53';
+//text = 'This ok commit closes #534 and fix #876 and also closes and #65765';
+
+//text = 'This ok commit #534 and #876 and also closes';
+
+text = 'This is commit only';
 
 const patterns = [
-  { name: 'issue1', patterns: [ '[fix|fixes|clse|closes|reference|references] [#] [CARDINAL]' ], mark: [1,2]},
-  { name: 'issue2', patterns: [ '[fix|fixes|clse|closes|reference|references] [:] [#] [CARDINAL]' ], mark: [2,3]}
+  { name: 'KeywordIssueNumber', patterns: [ '[fix|fixes|close|closes|reference|references] [#] [CARDINAL]' ], mark: [2,2]},
+  { name: 'KeywordIssueNumber2', patterns: [ '[fix|fixes|close|closes|reference|references] [:] [#] [CARDINAL]' ], mark: [3,3]},
+  { name: 'IssueNumber', patterns: [ '[#] [CARDINAL]' ], mark: [1,1]},
+  { name: 'Keyword', patterns: [ '[fix|fixes|close|closes|reference|references]' ]},
 ];
 
 nlp.learnCustomEntities(patterns);
 doc = nlp.readDoc(text);
 
-console.log(`\ntokens = ${doc.tokens().length()}`);
 
-console.log(`\ncustom entities = ${doc.customEntities().length()}`);
+//console.log(doc.customEntities().out(its.detail));
+//console.log(doc.customEntities().out().join( '\n' ));
 
-console.log(doc.customEntities().out().join( '\n' ));
+//console.log(`\ntokens = ${doc.tokens().length()}`);
 
-console.log(doc.customEntities().itemAt(0).tokens().itemAt(0).index()-2)
+//console.log(`\ncustom entities = ${doc.customEntities().length()}`);
+
+//console.log(doc.customEntities().out().join( '\n' ));
+
+//console.log(doc.customEntities().itemAt(0).tokens().itemAt(0).index()-2)
 
 //console.log(doc.customEntities().itemAt(0))
 
 
+var issueList = [];
+doc.customEntities()
+   .each( ( customEntities, index ) => { // each entity and its index
+              if ( customEntities.out(its.detail).type === 'IssueNumber') {
+                    issueList.push(customEntities.out(its.detail).value);
+              }
+              if ( customEntities.out(its.detail).type === 'KeywordIssueNumber' ) {
+                    issueList.push(customEntities.out(its.detail).value);
+              }
 
+        } );
+
+//console.log(issueList);
+
+
+if ( [1, 2, 3].includes(2) ) {
+    //console.log('testt');
+}
+
+var issueList = [];
+var keywords = [];
+var details = [];
+
+//issueAction = ['details','issueList','keywords']
+
+doc.customEntities()
+   .each( ( customEntities, index ) => { // each entity and its index
+              if ( ['KeywordIssueNumber', 'KeywordIssueNumber2'].includes(customEntities.out(its.detail).type) ) {
+                    issueList.push(customEntities.out(its.detail).value);
+                    var token = doc.tokens().itemAt( doc.customEntities().itemAt(index).tokens().itemAt(0).index()-2 );
+                    var DetailsArr = { 'IssueNumber' : customEntities.out(its.detail).value , 'Keyword' : token.out() }
+
+                    details.push( DetailsArr );
+                    keywords.push( token.out() );
+
+              }
+              else if ( ['IssueNumber'].includes(customEntities.out(its.detail).type) ) {
+                    issueList.push(customEntities.out(its.detail).value);
+              }
+
+              else if ( ['Keyword'].includes(customEntities.out(its.detail).type) ) {
+                    keywords.push( customEntities.out(its.detail).value );
+              }
+
+
+        } );
+
+
+
+literSummary = { 'issueList': issueList, 'keywords': keywords, 'details': details }
+
+console.log(literSummary);
 
 
 
