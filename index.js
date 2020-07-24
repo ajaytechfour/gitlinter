@@ -69,11 +69,11 @@ const nlp = winkNLP(model);
    //     } );
 
 
-//text = 'This ok commit closes #534 and fix #876 and also closes and #65765';
+text = 'This ok commit closes #534 and fix #876 and also closes and #65765';
 
 //text = 'This ok commit #534 and #876 and also closes';
 
-text = 'This is commit only';
+//text = 'This is commit only';
 
 const patterns = [
   { name: 'KeywordIssueNumber', patterns: [ '[fix|fixes|close|closes|reference|references] [#] [CARDINAL]' ], mark: [2,2]},
